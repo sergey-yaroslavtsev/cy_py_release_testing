@@ -1,0 +1,194 @@
+name: Release to TestPyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build_and_publish:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, 3.10, 3.11]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install cibuildwheel and tools
+        run: |
+          python -m pip install --upgrade cibuildwheel twine
+
+      - name: Build wheels with cibuildwheel
+        env:
+          CIBW_BUILD: cp${{ matrix.python-version.replace('.', '') }}-*
+          CIBW_SKIP: cp27-*
+          CIBW_OUTPUT_DIR: wheelhouse
+          CIBW_BUILD_FRONTEND: build
+        run: |
+          python -m cibuildwheel --output-dir wheelhouse
+
+      - name: Upload wheels to TestPyPI
+        env:
+          TWINE_USERNAME: ${{ secrets.TESTPYPI_USERNAME }}
+          TWINE_PASSWORD: ${{ secrets.TESTPYPI_TOKEN }}
+        run: |
+          python -m twine upload --repository testpypi wheelhouse/*.whl
+
+
+
+#name: Release
+#
+#on:
+#  release:
+#    types: [published]
+#
+#jobs:
+#  build_wheels:
+#    runs-on: ${{ matrix.os }}
+#    strategy:
+#      matrix:
+#        os: [ubuntu-latest, windows-latest, macos-latest]
+#        python-version: [3.9, 3.10, 3.11]
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Setup Python ${{ matrix.python-version }}
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: ${{ matrix.python-version }}
+#
+#      - name: Install cibuildwheel
+#        run: python -m pip install --upgrade cibuildwheel
+#
+#      - name: Build wheels with cibuildwheel
+#        env:
+#          CIBW_BUILD: cp${{ matrix.python-version.replace('.', '') }}-*
+#          CIBW_SKIP: cp27-*
+#          CIBW_OUTPUT_DIR: wheelhouse
+#        run: python -m cibuildwheel --output-dir wheelhouse
+#
+#      - name: Upload wheels
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: wheels-${{ matrix.os }}-py${{ matrix.python-version }}
+#          path: wheelhouse/*.whl
+#
+#  build_windows_exe:
+#    runs-on: windows-latest
+#    needs: build_wheels
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Setup Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: 3.10
+#
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip pyinstaller
+#
+#      - name: Build exe with PyInstaller
+#        run: |
+#          pyinstaller --onefile src/my_cy/main.py
+#          # exe will be in dist/main.exe
+#
+#      - name: Upload exe
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: windows-exe
+#          path: dist/main.exe
+#
+#  build_macos_dmg:
+#    runs-on: macos-latest
+#    needs: build_wheels
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Setup Python
+#        uses: actions/setup-python@v4
+#        with:
+#          python-version: 3.10
+#
+#      - name: Install dependencies
+#        run: |
+#          python -m pip install --upgrade pip pyinstaller
+#
+#      - name: Build dmg with PyInstaller and create dmg
+#        run: |
+#          pyinstaller --onefile src/my_cy/main.py
+#          # Create a simple dmg from the exe:
+#          hdiutil create -volname MyApp -srcfolder dist -ov MyApp.dmg
+#
+#      - name: Upload dmg
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: macos-dmg
+#          path: MyApp.dmg
+#
+#  upload_release_assets:
+#    needs: [build_wheels, build_windows_exe, build_macos_dmg]
+#    runs-on: ubuntu-latest
+#    steps:
+#      # Download all wheel artifacts from all OSes and python versions
+#      - name: Download all wheel artifacts
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-ubuntu-latest-py3.9
+#          path: wheels/ubuntu/3.9
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-ubuntu-latest-py3.10
+#          path: wheels/ubuntu/3.10
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-ubuntu-latest-py3.11
+#          path: wheels/ubuntu/3.11
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-windows-latest-py3.9
+#          path: wheels/windows/3.9
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-windows-latest-py3.10
+#          path: wheels/windows/3.10
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-windows-latest-py3.11
+#          path: wheels/windows/3.11
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-macos-latest-py3.9
+#          path: wheels/macos/3.9
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-macos-latest-py3.10
+#          path: wheels/macos/3.10
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: wheels-macos-latest-py3.11
+#          path: wheels/macos/3.11
+#
+#      # Download Windows exe and Mac dmg
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: windows-exe
+#          path: windows-exe
+#      - uses: actions/download-artifact@v3
+#        with:
+#          name: macos-dmg
+#          path: macos-dmg
+#
+#      - name: Upload release assets
+#        uses: softprops/action-gh-release@v1
+#        with:
+#          files: |
+#            wheels/**/*.whl
+#            windows-exe/main.exe
+#            macos-dmg/MyApp.dmg
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

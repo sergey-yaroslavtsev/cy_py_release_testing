@@ -1,1 +1,26 @@
 Nothing to do here
+
+pypi-AgENdGVzdC5weXBpLm9yZwIkMGIwOTY0MGMtNzE1Mi00NmJjLWE5ZmUtMTkyYmY0MTJiZTg0AAIqWzMsImQ1MGU1ODk2LWQ3NjctNDcyZC05NjM0LTJiNDY0NDQwZDFjOCJdAAAGIDsZ9f50lkmabPt63Ay2WaoXhRVxQQkdkVQVMMwe_CtE
+
+ .git
+   ...
+ .github
+   workflows
+     release.yml
+ .idea
+   inspectionProfiles
+     profiles_settings.xml
+   .gitignore
+   cy_py_release_testing.iml
+   misc.xml
+   modules.xml
+   vcs.xml
+   workspace.xml
+ src
+   my_cy
+     hello.pyx
+     __init__.py
+ LICENSE
+ pyproject.toml
+ README.rst
+ setup.py

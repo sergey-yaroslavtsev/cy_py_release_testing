@@ -1,18 +1,21 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 from setuptools.extension import Extension
 from Cython.Build import cythonize
+import numpy
 
 extensions = [
-    Extension("mymodule.hello", ["mymodule/hello.pyx"])
+    Extension("my_cy.hello",
+            ["src/my_cy/hello.pyx"],
+                    include_dirs=[numpy.get_include()])
 ]
 
 setup(
     name="my-cython-test-project",
-    version="0.1.0",
-    author="Your Name",
-    author_email="you@example.com",
+    version="0.1.0-test",
+    author="Void",
     description="A minimal Cython + Python project for testing",
     ext_modules=cythonize(extensions),
-    packages=["mymodule"],
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
     zip_safe=False,
 )
