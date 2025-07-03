@@ -10,6 +10,7 @@ jobs:
     strategy:
       matrix:
         python-version: [3.9, 3.10, 3.11]
+        python-version-no-dot: [39, 310, 311]
     steps:
       - uses: actions/checkout@v3
 
@@ -24,7 +25,7 @@ jobs:
 
       - name: Build wheels with cibuildwheel
         env:
-          CIBW_BUILD: cp${{ matrix.python-version.replace('.', '') }}-*
+          CIBW_BUILD: cp${{ matrix.python-version-no-dot }}-*
           CIBW_SKIP: cp27-*
           CIBW_OUTPUT_DIR: wheelhouse
           CIBW_BUILD_FRONTEND: build
