@@ -7,28 +7,36 @@ on:
 jobs:
   build_and_publish:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        include:
+          - python-version: 3.12
+            python-version-no-dot: 312
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python 3.12 to run cibuildwheel
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
-          python-version: 3.12
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install build tools
+      - name: Install cibuildwheel and tools
         run: |
-          python -m pip install --upgrade cibuildwheel twine build
+          python -m pip install --upgrade cibuildwheel twine
+
+      - name: Install build dependencies
+        run: python -m pip install --upgrade setuptools wheel numpy cython
 
       - name: Build wheels with cibuildwheel for Python 3.12
         env:
           CIBW_BUILD: cp312-*
           CIBW_OUTPUT_DIR: wheelhouse
           CIBW_BUILD_FRONTEND: build
-        run: python -m cibuildwheel --output-dir wheelhouse
+        run: python -m cibuildwheel --output-dir wheelhouse --verbose
 
       - name: Upload wheels to TestPyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.TESTPYPI_TOKEN }}
-        run: python -m twine upload --repository testpypi wheelhouse/*.whl
+        run: |
+          python -m twine upload --repository testpypi wheelhouse/*.whl
