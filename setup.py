@@ -10,7 +10,7 @@ extensions = [
 ]
 
 setup(
-    name="my-cython-test-project",
+    name="cy_py_test",
     version="0.1.0a1",
     author="Void",
     description="A minimal Cython + Python project for testing",
