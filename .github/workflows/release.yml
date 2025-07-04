@@ -59,7 +59,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, macos-latest]
-        python-version: [ "3.12" ]
+        python-version: [ "3.11" ]
 
     steps:
       - uses: actions/checkout@v3
@@ -76,24 +76,25 @@ jobs:
       - name: Install PyInstaller
         run: pip install pyinstaller
 
-      - name: Build executable
-        run: |
-          pyinstaller packages/cy_py_test.spec
+      - name: Build executable with PyInstaller
+        run: pyinstaller packages/cy_py_test.spec
 
       - name: Windows installer (NSIS)
         if: runner.os == 'Windows'
         run: |
-          choco install nsis
+          choco install nsis -y
           makensis packages/installer.nsi
 
       - name: macOS installer (DMG)
         if: runner.os == 'macOS'
         run: |
           brew install create-dmg
+          mkdir -p output
           create-dmg --volname "CyPyTest" --overwrite --dmg-title "CyPyTest" \
             --app-drop-link 600 185 dist/cy_py_test.app output/
 
-      - uses: actions/upload-artifact@v4
+      - name: Upload installer artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: installer-${{ matrix.os }}
           path: |
