@@ -9,18 +9,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          os: [ubuntu-latest, windows-latest]
-          python-version: ["3.11", "3.12"]
+        os: [ ubuntu-latest, windows-latest ]
+        python-version: [ "3.11", "3.12" ]
+        include:
+          - python-version: "3.11"
+            cibw-version: "311"
+          - python-version: "3.12"
+            cibw-version: "312"
     steps:
-      - name: Determine cibw-version
-        id: cibw
-        run: |
-          case "${{ matrix.python-version }}" in
-            "3.11") echo "cibw_version=311" ;;
-            "3.12") echo "cibw_version=312" ;;
-            *) echo "cibw_version=unknown" ;;
-          esac >> $GITHUB_OUTPUT
-
       - uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
@@ -37,7 +33,7 @@ jobs:
 
       - name: Build wheels with cibuildwheel for Python ${{ matrix.python-version }}
         env:
-          CIBW_BUILD: cp${{ steps.cibw.outputs.cibw_version }}-*
+          CIBW_BUILD: cp${{ matrix.cibw-version }}-*
           CIBW_OUTPUT_DIR: wheelhouse
           CIBW_BUILD_FRONTEND: build
           CIBW_BUILD_VERBOSITY: 1
