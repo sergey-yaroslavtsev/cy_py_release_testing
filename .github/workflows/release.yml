@@ -38,6 +38,6 @@ jobs:
       - name: Upload wheels to TestPyPI
         env:
           TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.TESTPYPI_TOKEN }}
+          TWINE_PASSWORD: ${{ secrets.TESTPYPI_PASSWORD }}
         run: |
           python -m twine upload --repository testpypi wheelhouse/*.whl --verbose
