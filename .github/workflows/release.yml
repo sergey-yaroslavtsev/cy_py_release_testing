@@ -48,3 +48,58 @@ jobs:
         run: |
           python -m twine upload --repository testpypi wheelhouse/*.whl
         # python -m twine upload --repository testpypi wheelhouse/*.whl --verbose
+
+  build_installers:
+    needs: build_and_publish
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest]
+        python-version: [ "3.12" ]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install app from TestPyPI
+        run: |
+          pip install --upgrade pip
+          pip install --index-url https://test.pypi.org/simple/ --extra-index-url https://pypi.org/simple/ cy_py_test
+
+      - name: Install PyInstaller
+        run: pip install pyinstaller
+
+      - name: Build executable
+        run: |
+          pyinstaller packages/cy_py_test.spec
+
+      - name: Windows installer (NSIS)
+        if: runner.os == 'Windows'
+        run: |
+          choco install nsis
+          makensis packages/installer.nsi
+
+      - name: macOS installer (DMG)
+        if: runner.os == 'macOS'
+        run: |
+          brew install create-dmg
+          create-dmg --volname "CyPyTest" --overwrite --dmg-title "CyPyTest" \
+            --app-drop-link 600 185 dist/cy_py_test.app output/
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: installer-${{ matrix.os }}
+          path: |
+            dist/*.exe
+            output/*.dmg
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'release'
+        with:
+          files: |
+            dist/*.exe
+            output/*.dmg
