@@ -77,7 +77,9 @@ jobs:
         run: pip install pyinstaller
 
       - name: Build executable with PyInstaller
-        run: pyinstaller packages/cy_py_test.spec
+        run: |
+          cd cy_py_release_testing
+          pyinstaller packages/cy_py_test.spec
 
       - name: Windows installer (NSIS)
         if: runner.os == 'Windows'
