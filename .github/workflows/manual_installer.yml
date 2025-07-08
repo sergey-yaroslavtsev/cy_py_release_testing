@@ -60,7 +60,7 @@ jobs:
           create-dmg \
             --volname "CyPyTest" \
             --app-drop-link 600 185 \
-            dist/cy_py_test.app
+            dist/cy_py_test.app \
             output/CyPyTest.dmg
 
       - name: Upload installer artifacts
