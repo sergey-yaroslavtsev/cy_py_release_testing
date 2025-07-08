@@ -34,6 +34,12 @@ exe = EXE(
     console=True,
 )
 
+bundle = BUNDLE(
+    exe,
+    name='cy_py_test.app',
+    ),
+)
+
 coll = COLLECT(
     exe,
     a.binaries,
@@ -43,10 +49,4 @@ coll = COLLECT(
     upx=True,
     upx_exclude=[],
     name='cy_py_test'
-)
-
-bundle = BUNDLE(
-    exe,
-    name='cy_py_test.app',
-    ),
 )
