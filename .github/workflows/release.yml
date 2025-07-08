@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest ] # ubuntu-latest, windows-latest,
+        os: [ windows-latest, macos-latest ] # ubuntu-latest,
         python-version: [ "3.11" ]
         include:
           - python-version: "3.11"
@@ -58,7 +58,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [macos-latest] # windows-latest,
+        os: [windows-latest, macos-latest]
         python-version: [ "3.11" ]
 
     steps:
@@ -78,9 +78,8 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          ls -la
           cd packages
-          pyinstaller cy_py_test.spec
+          pyinstaller -- clean cy_py_test.spec
 
       - name: Windows installer (NSIS)
         if: runner.os == 'Windows'
@@ -93,7 +92,8 @@ jobs:
         run: |
           brew install create-dmg
           mkdir -p output
-          create-dmg --volname "CyPyTest" --overwrite --dmg-title "CyPyTest" \
+          rm -f output/CyPyTest.dmg
+          create-dmg --volname "CyPyTest" --dmg-title "CyPyTest" \
             --app-drop-link 600 185 dist/cy_py_test.app output/
 
       - name: Upload installer artifacts
