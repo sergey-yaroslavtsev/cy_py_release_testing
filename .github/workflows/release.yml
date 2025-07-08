@@ -9,7 +9,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        os: [ macos-latest ] # ubuntu-latest, windows-latest,
         python-version: [ "3.11" ]
         include:
           - python-version: "3.11"
@@ -58,7 +58,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest]
+        os: [macos-latest] # windows-latest,
         python-version: [ "3.11" ]
 
     steps:
@@ -78,6 +78,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
+          ls -la
           cd cy_py_release_testing
           pyinstaller packages/cy_py_test.spec
 
