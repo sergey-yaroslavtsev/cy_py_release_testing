@@ -91,12 +91,15 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install create-dmg
+          cd packages
           mkdir -p output
           rm -f output/CyPyTest.dmg
-          ls -la 
-          ls -la package
-          create-dmg --volname "CyPyTest" --dmg-title "CyPyTest" \
-            --app-drop-link 600 185 dist/cy_py_test.app output/
+          ls -la dist/cy_py_test.app
+          create-dmg \
+            --volname "CyPyTest" \
+            --app-drop-link 600 185 \
+            dist/cy_py_test.app \
+            output/CyPyTest.dmg
 
       - name: Upload installer artifacts
         uses: actions/upload-artifact@v4

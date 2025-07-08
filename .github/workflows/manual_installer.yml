@@ -56,7 +56,7 @@ jobs:
           cd packages
           mkdir -p output
           rm -f output/CyPyTest.dmg
-          ls -la dist
+          ls -la dist/cy_py_test.app
           create-dmg \
             --volname "CyPyTest" \
             --app-drop-link 600 185 \
