@@ -79,8 +79,8 @@ jobs:
       - name: Build executable with PyInstaller
         run: |
           ls -la
-          cd cy_py_release_testing
-          pyinstaller packages/cy_py_test.spec
+          cd packages
+          pyinstaller cy_py_test.spec
 
       - name: Windows installer (NSIS)
         if: runner.os == 'Windows'
