@@ -3,13 +3,13 @@
 block_cipher = None
 
 import os
-script_path = os.path.abspath(os.path.join(os.getcwd(), 'cy_py_release_testing', 'src', 'my_cy', '__main__.py'))
+script_path = os.path.abspath(os.path.join(os.getcwd(), 'src', 'my_cy', '__main__.py'))
 print(os.getcwd())
 print(script_path)
 print('cy_py_release_testing/cy_py_release_testing/src/my_cy/__main__.py')
 
 a = Analysis(
-    ['cy_py_release_testing/src/my_cy/__main__.py'],
+    [script_path],
     pathex=['.'],
     binaries=[],
     datas=[],
