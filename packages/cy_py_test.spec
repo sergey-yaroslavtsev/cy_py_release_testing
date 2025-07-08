@@ -9,7 +9,7 @@ print(script_path)
 print('cy_py_release_testing/cy_py_release_testing/src/my_cy/__main__.py')
 
 a = Analysis(
-    ['cy_py_release_testing/cy_py_release_testing/src/my_cy/__main__.py'],
+    ['cy_py_release_testing/src/my_cy/__main__.py'],
     pathex=['.'],
     binaries=[],
     datas=[],
