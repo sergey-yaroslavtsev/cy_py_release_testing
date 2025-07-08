@@ -44,3 +44,9 @@ coll = COLLECT(
     upx_exclude=[],
     name='cy_py_test'
 )
+
+bundle = BUNDLE(
+    exe,
+    name='cy_py_test.app',
+    ),
+)
