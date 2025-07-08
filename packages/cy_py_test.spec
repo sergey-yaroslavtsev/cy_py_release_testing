@@ -2,8 +2,11 @@
 # Replace "your_script.py" with the actual entry point of your package
 block_cipher = None
 
+import os
+script_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src', 'my_cy', '__main__.py'))
+
 a = Analysis(
-    ['src/my_cy/__main__.py'],
+    [script_path],
     pathex=['.'],
     binaries=[],
     datas=[],
