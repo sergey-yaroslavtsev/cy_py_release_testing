@@ -33,11 +33,15 @@ jobs:
       - name: Install PyInstaller
         run: pip install pyinstaller
 
+      - name: Clean previous builds
+        run: rm -rf build dist
+
       - name: Build executable with PyInstaller
         run: |
           ls -la
           ls -la src/my_cy
           ls -la packages
+          pyinstaller --clean packages/cy_py_test.spec
           pyinstaller packages/cy_py_test.spec
 
       - name: Windows installer (NSIS)
