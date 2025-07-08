@@ -55,7 +55,7 @@ jobs:
           mkdir -p output
           rm -f output/CyPyTest.dmg
           ls -la 
-          ls -la package
+          ls -la packages
           create-dmg --volname "CyPyTest" \
             --app-drop-link 600 185 packages/dist/cy_py_test.app output/
 
