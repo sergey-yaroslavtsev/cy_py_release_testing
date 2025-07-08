@@ -39,9 +39,6 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-#          ls -la
-#          ls -la src/my_cy
-#          ls -la packages
           pyinstaller --clean packages/cy_py_test.spec
           pyinstaller packages/cy_py_test.spec
 
