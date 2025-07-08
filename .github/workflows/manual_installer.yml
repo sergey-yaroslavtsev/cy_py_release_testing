@@ -55,7 +55,7 @@ jobs:
           mkdir -p output
           rm -f output/CyPyTest.dmg
           create-dmg --volname "CyPyTest" \
-            --app-drop-link 600 185 dist/cy_py_test.app output/
+            --app-drop-link 600 185 dist/cy_py_test.app output/CyPyTest.dmg
 
       - name: Upload installer artifacts
         uses: actions/upload-artifact@v4
