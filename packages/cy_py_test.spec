@@ -31,7 +31,7 @@ exe = EXE(
     bootloader_ignore_signals=False,
     strip=False,
     upx=True,
-    console=True,  # change to False to hide console window
+    console=True,
 )
 
 coll = COLLECT(

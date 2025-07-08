@@ -93,6 +93,8 @@ jobs:
           brew install create-dmg
           mkdir -p output
           rm -f output/CyPyTest.dmg
+          ls -la 
+          ls -la package
           create-dmg --volname "CyPyTest" --dmg-title "CyPyTest" \
             --app-drop-link 600 185 dist/cy_py_test.app output/
 
