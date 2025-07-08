@@ -54,7 +54,7 @@ jobs:
           brew install create-dmg
           mkdir -p output
           rm -f output/CyPyTest.dmg
-          create-dmg --volname "CyPyTest" --dmg-title "CyPyTest" \
+          create-dmg --volname "CyPyTest" \
             --app-drop-link 600 185 dist/cy_py_test.app output/
 
       - name: Upload installer artifacts
