@@ -35,7 +35,6 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-#          cd cy_py_release_testing
           pyinstaller packages/cy_py_test.spec
 
       - name: Windows installer (NSIS)
