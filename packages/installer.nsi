@@ -9,6 +9,6 @@ Page instfiles
 
 Section
   SetOutPath "$INSTDIR"
-  File "packages\dist\${PRODUCT_EXE}"
+  File "dist\${PRODUCT_EXE}"
   CreateShortcut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_EXE}"
 SectionEnd

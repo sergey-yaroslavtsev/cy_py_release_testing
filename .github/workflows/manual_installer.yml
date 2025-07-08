@@ -46,7 +46,8 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install nsis -y
-          makensis packages/installer.nsi
+          cd packages
+          makensis installer.nsi
 
       - name: macOS installer (DMG)
         if: runner.os == 'macOS'
@@ -56,8 +57,10 @@ jobs:
           rm -f output/CyPyTest.dmg
           ls -la 
           ls -la packages
-          create-dmg --volname "CyPyTest" \
-            --app-drop-link 600 185 packages/dist/cy_py_test.app output/
+          create-dmg packages/dist/cy_py_test.app \
+            --volname "CyPyTest" \
+            --app-drop-link 600 185 \
+            --out "output"
 
       - name: Upload installer artifacts
         uses: actions/upload-artifact@v4
