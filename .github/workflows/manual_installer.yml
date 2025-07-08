@@ -40,7 +40,7 @@ jobs:
       - name: Build executable with PyInstaller
         run: |
           cd packages
-          pyinstaller --clean cy_py_test.spec
+          pyinstaller --clean --windowed cy_py_test.spec
 
       - name: Windows installer (NSIS)
         if: runner.os == 'Windows'
