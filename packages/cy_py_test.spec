@@ -40,13 +40,4 @@ bundle = BUNDLE(
     ),
 )
 
-coll = COLLECT(
-    exe,
-    a.binaries,
-    a.zipfiles,
-    a.datas,
-    strip=False,
-    upx=True,
-    upx_exclude=[],
-    name='cy_py_test'
-)
+
