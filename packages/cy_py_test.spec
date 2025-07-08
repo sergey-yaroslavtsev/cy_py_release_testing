@@ -3,7 +3,7 @@
 block_cipher = None
 
 import os
-script_path = os.path.abspath(os.path.join(os.getcwd(), '..', 'src', 'my_cy', '__main__.py'))
+script_path = os.path.abspath(os.path.join(os.getcwd(), 'src', 'my_cy', '__main__.py'))
 
 a = Analysis(
     [script_path],
