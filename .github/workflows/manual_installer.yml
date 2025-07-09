@@ -47,6 +47,9 @@ jobs:
         run: |
           choco install nsis -y
           cd packages
+          type installer.nsi
+          echo "Listing full dist folder:"
+          dir dist /s
           makensis installer.nsi
 
       - name: macOS installer (DMG)
