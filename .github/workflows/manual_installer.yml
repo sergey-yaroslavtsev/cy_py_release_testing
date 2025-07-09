@@ -48,8 +48,6 @@ jobs:
           choco install nsis -y
           cd packages
           type installer.nsi
-          echo "Listing full dist folder:"
-          dir dist /s
           makensis installer.nsi
 
       - name: macOS installer (DMG)
@@ -63,10 +61,11 @@ jobs:
           ls -la dist
           ls -la dist/cy_py_test
           file dist/cy_py_test/cy_py_test
+          file dist/cy_py_test/cy_py_test.app
           create-dmg \
             --volname "CyPyTest" \
             --app-drop-link 600 185 \
-            cy_py_test/cy_py_test \
+            cy_py_test/cy_py_test.app \
             output/CyPyTest.dmg
 
       - name: Upload installer artifacts
