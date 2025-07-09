@@ -34,10 +34,18 @@ exe = EXE(
     console=True,
 )
 
-bundle = BUNDLE(
+coll = COLLECT(
     exe,
-    name='cy_py_test.app',
-    ),
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name='cy_py_test'
 )
 
-
+bundle = BUNDLE(
+    coll,
+    name='cy_py_test.app',
+)

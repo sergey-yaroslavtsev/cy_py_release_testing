@@ -9,6 +9,6 @@ Page instfiles
 
 Section
   SetOutPath "$INSTDIR"
-  File "dist\${PRODUCT_EXE}"
+  File "dist\cy_py_test\cy_py_test.exe"
   CreateShortcut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\${PRODUCT_EXE}"
 SectionEnd

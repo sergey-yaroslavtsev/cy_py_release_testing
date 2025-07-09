@@ -11,7 +11,7 @@ extensions = [
 
 setup(
     name="cy_py_test",
-    version="0.2.10",
+    version="0.2.11",
     author="Void",
     description="A minimal Cython + Python project for testing",
     ext_modules=cythonize(extensions),
