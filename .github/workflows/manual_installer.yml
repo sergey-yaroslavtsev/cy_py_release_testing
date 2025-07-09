@@ -58,11 +58,12 @@ jobs:
           rm -f output/CyPyTest.dmg
           ls -la
           ls -la dist
-          ls -la dist/cy_py_test.app
+          ls -la dist/cy_py_test
+          file dist/cy_py_test
           create-dmg \
             --volname "CyPyTest" \
             --app-drop-link 600 185 \
-            cy_py_test.app \
+            cy_py_test \
             output/CyPyTest.dmg
 
       - name: Upload installer artifacts
