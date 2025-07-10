@@ -100,9 +100,10 @@ jobs:
           ls -la dist/cy_py_test
           create-dmg \
             --volname "CyPyTest" \
+            --hide-extension "cy_py_test.app" \
             --app-drop-link 600 185 \
-            dist/cy_py_test.app \
-            output/CyPyTest.dmg
+            "output/CyPyTest.dmg" \
+            "dist/" \
 
       - name: Upload installer artifacts
         uses: actions/upload-artifact@v4
@@ -112,10 +113,22 @@ jobs:
             packages/dist/cy_py_test/*.exe
             packages/output/*.dmg
 
-      - name: Upload to GitHub Release
+      - name: Upload Windows executables to GitHub Release
         uses: softprops/action-gh-release@v1
-        if: github.event_name == 'release'
+        if: github.event_name == 'release' && runner.os == 'Windows'
         with:
-          files: |
-            packages/dist/cy_py_test/*.exe
-            packages/output/*.dmg
+          files: packages/dist/cy_py_test/*.exe
+
+      - name: Upload macOS dmg files to GitHub Release
+        uses: softprops/action-gh-release@v1
+        if: github.event_name == 'release' && runner.os == 'macOS'
+        with:
+          files: packages/output/*.dmg
+#
+#      - name: Upload to GitHub Release
+#        uses: softprops/action-gh-release@v1
+#        if: github.event_name == 'release'
+#        with:
+#          files: |
+#            packages/dist/cy_py_test/*.exe
+#            packages/output/*.dmg
