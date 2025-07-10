@@ -46,7 +46,7 @@ jobs:
           python -m cibuildwheel --output-dir wheelhouse #--debug-traceback
 
       - name: Build sdist (source tarball)
-        if: matrix.os == "macos-latest"
+        if: matrix.os == 'macos-latest'
         run: python setup.py sdist
 
       - name: Upload wheels to TestPyPI
