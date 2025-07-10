@@ -6,7 +6,8 @@ package:
   version: "{{ version }}"
 
 source:
-  url: https://test-files.pythonhosted.org/packages/source/c/cy-py-test/cy-py-test-{{ version }}.tar.gz
+  url: https://github.com/sergey-yaroslavtsev/cy_py_release_testing/archive/refs/tags/v{{ version }}.tar.gz
+  sha256: <fill-in-sha256>
 
 build:
   noarch: python

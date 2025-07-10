@@ -45,20 +45,77 @@ jobs:
         run: |
           python -m cibuildwheel --output-dir wheelhouse #--debug-traceback
 
-      - name: Build sdist (source tarball)
-        if: matrix.os == 'macos-latest'
-        run: python setup.py sdist
+#      - name: Build sdist (source tarball)
+#        if: matrix.os == 'macos-latest'
+#        run: python setup.py sdist
 
       - name: Upload wheels to TestPyPI
         env:
           TWINE_USERNAME: __token__
           TWINE_PASSWORD: ${{ secrets.TESTPYPI_PASSWORD }}
         run: |
-          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-            python -m twine upload --repository testpypi dist/*.tar.gz
-          fi
           python -m twine upload --repository testpypi wheelhouse/*.whl
+        #          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+        #            python -m twine upload --repository testpypi dist/*.tar.gz
+        #          fi
         # python -m twine upload --repository testpypi wheelhouse/*.whl --verbose
+
+  generate_conda_recipe:
+    needs: build_and_publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Get SHA256 of GitHub release tarball
+        id: compute_sha
+        run: |
+          VERSION=${{ github.ref_name }}
+          curl -L -o source.tar.gz https://github.com/${{ github.repository }}/archive/refs/tags/${VERSION}.tar.gz
+          SHA=$(sha256sum source.tar.gz | awk '{print $1}')
+          echo "sha256=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Create conda recipe with meta.yaml
+        run: |
+          mkdir -p conda-recipe
+          VERSION=${{ github.ref_name }}
+          SHA=${{ steps.compute_sha.outputs.sha256 }}
+          cat > conda-recipe/meta.yaml <<EOF
+          package:
+            name: cy-py-test
+            version: "${VERSION}"
+          
+          source:
+            url: https://github.com/${{ github.repository }}/archive/refs/tags/${VERSION}.tar.gz
+            sha256: ${SHA}
+          
+          build:
+            script: python -m pip install . --no-deps --ignore-installed -vv
+            noarch: python
+          
+          requirements:
+            host:
+              - python >=3.7
+              - pip
+            run:
+              - python >=3.7
+          
+          test:
+            imports:
+              - my_cy
+          
+          about:
+            license: MIT
+            summary: "Example Cython test project"
+
+          EOF
+
+      - name: Upload Conda recipe
+        uses: actions/upload-artifact@v4
+        with:
+          name: conda-recipe
+          path: conda-recipe/
 
   build_installers:
     needs: build_and_publish
