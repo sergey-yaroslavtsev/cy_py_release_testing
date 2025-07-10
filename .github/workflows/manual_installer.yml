@@ -57,15 +57,12 @@ jobs:
           cd packages
           mkdir -p output
           rm -f output/CyPyTest.dmg
-          ls -la
           ls -la dist
           ls -la dist/cy_py_test
-          file dist/cy_py_test/cy_py_test
-          file dist/cy_py_test/cy_py_test.app
           create-dmg \
             --volname "CyPyTest" \
             --app-drop-link 600 185 \
-            cy_py_test/cy_py_test.app \
+            cy_py_test.app \
             output/CyPyTest.dmg
 
       - name: Upload installer artifacts
@@ -73,13 +70,13 @@ jobs:
         with:
           name: installer-${{ matrix.os }}
           path: |
-            dist/*.exe
-            output/*.dmg
+            packages/dist/cy_py_test/*.exe
+            packages/output/*.dmg
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'release'
         with:
           files: |
-            dist/*.exe
-            output/*.dmg
+            packages/dist/cy_py_test/*.exe
+            packages/output/*.dmg

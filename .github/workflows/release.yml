@@ -112,13 +112,13 @@ jobs:
         with:
           name: installer-${{ matrix.os }}
           path: |
-            dist/*.exe
-            output/*.dmg
+            packages/dist/cy_py_test/*.exe
+            packages/output/*.dmg
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
         if: github.event_name == 'release'
         with:
           files: |
-            dist/*.exe
-            output/*.dmg
+            packages/dist/cy_py_test/*.exe
+            packages/output/*.dmg
