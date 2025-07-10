@@ -1,26 +1,16 @@
-Nothing to do here
-
-pypi-AgENdGVzdC5weXBpLm9yZwIkMGIwOTY0MGMtNzE1Mi00NmJjLWE5ZmUtMTkyYmY0MTJiZTg0AAIqWzMsImQ1MGU1ODk2LWQ3NjctNDcyZC05NjM0LTJiNDY0NDQwZDFjOCJdAAAGIDsZ9f50lkmabPt63Ay2WaoXhRVxQQkdkVQVMMwe_CtE
-
- .git
-   ...
- .github
-   workflows
-     release.yml
- .idea
-   inspectionProfiles
-     profiles_settings.xml
-   .gitignore
-   cy_py_release_testing.iml
-   misc.xml
-   modules.xml
-   vcs.xml
-   workspace.xml
- src
-   my_cy
-     hello.pyx
-     __init__.py
- LICENSE
- pyproject.toml
- README.rst
- setup.py
+MIT License
+Copyright (c) 2025 European Synchrotron Radiation Facility
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+the Software, and to permit persons to whom the Software is furnished to do so,
+subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

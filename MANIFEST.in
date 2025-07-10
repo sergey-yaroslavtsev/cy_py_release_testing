@@ -1,0 +1,20 @@
+# Include all Python source files
+recursive-include src/my_cy *.py *.pyx
+
+# Include Cython headers if any (.pxd)
+recursive-include src/my_cy *.pxd
+
+# Include your package metadata files
+include LICENSE
+include README.rst
+include setup.py
+include pyproject.toml
+
+# Include any other YAML files at the root (like release workflows)
+include another_release_version.yml
+
+# Include GitHub workflow files (optional, but useful)
+recursive-include .github/workflows *.yml
+
+# Include installer files if you want (optional, usually not part of package)
+recursive-include packages *.spec *.nsi

@@ -1,0 +1,27 @@
+{% set name = "cy-py-test" %}
+{% set version = "0.2.14" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: https://test-files.pythonhosted.org/packages/source/c/cy-py-test/cy-py-test-{{ version }}.tar.gz
+
+build:
+  noarch: python
+  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+about:
+  home: https://test.pypi.org/project/cy-py-test/
+  summary: "A test package for conda build experiments"
+  license: MIT
+  license_family: MIT
+
