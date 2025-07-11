@@ -37,5 +37,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: conda-package
-          path: conda-bld/**/*.{tar.bz2,conda}
-        working-directory: conda
+          path: conda/conda-bld/osx-64/cy-py-test-0.3.3-py311_0.conda
+
+#conda/conda-bld/**/*.{tar.bz2,conda}
