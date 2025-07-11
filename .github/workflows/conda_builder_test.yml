@@ -30,4 +30,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: conda-package
-          path: conda-bld/**/*.{tar.bz2,conda}
+          path: conda/conda-bld/**/*.{tar.bz2,conda}
