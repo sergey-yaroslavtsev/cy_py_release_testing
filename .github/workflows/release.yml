@@ -92,12 +92,12 @@ jobs:
           
           build:
             script: python -m pip install . --no-deps --ignore-installed -vv
-            noarch: python
           
           requirements:
             host:
               - python >=3.7
               - pip
+              - setuptools
             run:
               - python >=3.7
           

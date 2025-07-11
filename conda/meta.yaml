@@ -1,24 +1,37 @@
 {% set name = "cy-py-test" %}
-{% set version = "0.2.14" %}
+{% set version = "0.3.3" %}
 
 package:
   name: "{{ name|lower }}"
   version: "{{ version }}"
 
 source:
-  url: https://github.com/sergey-yaroslavtsev/cy_py_release_testing/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: <fill-in-sha256>
+  path:  ./
+
 
 build:
-  noarch: python
-  script: "{{ PYTHON }} -m pip install . --no-deps -vv"
+  script: bld.bat
+  no_build_isolation: True
 
 requirements:
-  host:
-    - python
+  build:
+    - python =3.11
     - pip
+    - numpy >=2.0
+    - cython
+    - setuptools
+    - wheel
+  host:
+    - python =3.11
+    - pip
+    - numpy >=2.0
+    - cython
+    - setuptools
+    - wheel
   run:
-    - python
+    - python =3.11
+    - numpy >=2.0
+    - cython
 
 about:
   home: https://test.pypi.org/project/cy-py-test/
