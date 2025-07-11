@@ -26,8 +26,16 @@ jobs:
          cd conda 
          conda build . --output-folder ./conda-bld
 
+      - name: List conda build output
+        run: |
+          ls -R 
+          ls -R conda
+          ls -R conda/conda-bld
+          ls -R conda/conda-bld/osx-64
+
       - name: Upload conda package artifact
         uses: actions/upload-artifact@v4
         with:
           name: conda-package
-          path: conda/conda-bld/**/*.{tar.bz2,conda}
+          path: conda-bld/**/*.{tar.bz2,conda}
+        working-directory: conda
