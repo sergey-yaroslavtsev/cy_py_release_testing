@@ -8,11 +8,6 @@ package:
 source:
   path:  ./
 
-
-build:
-  script: bld.bat
-  no_build_isolation: True
-
 requirements:
   build:
     - python =3.11
