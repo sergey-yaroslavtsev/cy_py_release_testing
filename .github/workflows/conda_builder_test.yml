@@ -29,5 +29,5 @@ jobs:
       - name: Upload conda package artifact
         uses: actions/upload-artifact@v4
         with:
-          name: windows-conda-package
-          path: conda-bld/*.tar.bz2
+          name: conda-package
+          path: conda-bld/**/*.{tar.bz2,conda}
